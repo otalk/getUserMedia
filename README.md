@@ -46,7 +46,7 @@ getUserMedia({video: true, audio: false}, function (err, stream) { ... });
 ```
 
 
-Why? Because it's super ugly without this tool
+## Why? Because it's super ugly without this tool
 
 ```js
 // first deal with browser prefixes
