@@ -1,10 +1,15 @@
 # getUserMedia
 
-## What?
+## What is this?
 
-Tiny cross-browser module that wraps `navigator.getUserMedia` and gives us cleaner error-first API and cross-browser handling. No browser support checking necessary, lack of support is treated in the same way as when the user rejects the request: the callback gets passed an error as the first argument.
+A tiny browser module that gives us a simple API for getting access to a user's camera or microphone by wrapping the `navigator.getUserMedia` API in modern browsers.
 
-Suitable for use with browserify/commonJS on the client.
+It gives us a cleaner node.js-style, error-first API and cross-browser handling. No browser support checking necessary, lack of support is treated in the same way as when the user rejects the request: the callback gets passed an error as the first argument.
+
+Suitable for use with browserify/CommonJS on the client. 
+
+If you're not using browserify or you want AMD support use `getusermedia.bundle.js`.
+
 
 ## Installing
 
@@ -12,16 +17,49 @@ Suitable for use with browserify/commonJS on the client.
 npm install getusermedia
 ```
 
-## API
+## How to use it
 
-vanilla JS example
+
+With this helper it's clean/simple to get access to a user's camera, mic, etc.
+
+```js
+var getUserMedia = require('getusermedia');
+
+getUserMedia(function (err, stream) {
+    // if the browser doesn't support user media
+    // or the user says "no" the error gets passed
+    // as the first argument.
+    if (err) {
+       console.log('failed');
+    } else {
+       console.log('got a stream', stream);  
+    }
+});
+```
+
+Passing in options is optional. It defaults to `{video: true, audio: true}`;
+
+```js
+// optionally pass constraints as the first argument
+// they just passed through.
+getUserMedia({video: true, audio: false}, function (err, stream) { ... });
+```
+
+
+This is what you have to do without this tool:
 
 ```js
 // first deal with browser prefixes
-var getUserMedia = (navigator.getUserMedia || 
+var getUserMedia = navigator.getUserMedia || 
     navigator.mozGetUserMedia || 
-    navigator.webkitGetUserMedia).bind(navigator);
+    navigator.webkitGetUserMedia;
 
+// make sure it's supported and bind to navigator
+if (getUserMedia) {
+    getUserMedia = getUserMedia.bind(navigator);
+}
+
+// then deal with a weird, positional error handling API
 getUserMedia(
     // media constraints
     {video: true, audio: true}, 
@@ -34,30 +72,9 @@ getUserMedia(
         // called if failed to get media
     }
 )
-
-navigator.webkitGetUserMedia(CONSTRAINTS, SUCCESSCALLBACK, ERRORCALLBACK);
 ```
 
-Our version:
 
-```js
-var getUserMedia = require('getUserMedia');
-
-// constraints are optional
-// defaults to {audio: true, video: true};
-getUserMedia(function (err, stream) {
-    if (err) {
-       console.log('failed');
-    } else {
-       console.log('got a stream', stream);  
-    }
-});
-```
-
-```js
-// or pass constraints and they get passed through to real function
-getUserMedia({video: true, audio: false}, function (err, stream) { ... });
-```
 
 ## License
 
