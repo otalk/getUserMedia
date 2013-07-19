@@ -1,6 +1,6 @@
 {
   "name": "getusermedia",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "cross-browser getUserMedia shim with node.js style error-first API.",
   "main": "getusermedia.js",
   "repository": {
