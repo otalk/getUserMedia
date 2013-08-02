@@ -12,7 +12,7 @@ It gives us a cleaner node.js-style, error-first API and cross-browser handling.
 
 Suitable for use with browserify/CommonJS on the client. 
 
-If you're not using browserify or you want AMD support use `getusermedia.bundle.js`.
+If you're not using browserify or you want AMD support use `getusermedia.bundle.js`. Note that if no module system is detected it simply attaches a function called `getUserMedia` to `window`.
 
 
 
