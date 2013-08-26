@@ -55,7 +55,7 @@ To attach video to DOM element use [attachMediaStream](https://github.com/Henrik
 
 ## Using with requireJS
 
-Use file webrtcsupport.require.js
+Use file getusermedia.require.js
 
 ```js
 define(['getusermedia'], function(getUserMedia) {
