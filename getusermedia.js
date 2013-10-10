@@ -3,7 +3,10 @@ var func = (navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia);
-
+            
+function isSupported() {
+    return !!func;
+}
 
 module.exports = function (constraints, cb) {
     var options;
@@ -20,7 +23,7 @@ module.exports = function (constraints, cb) {
     }
 
     // treat lack of browser support like an error
-    if (!func) {
+    if (!isSupported()) {
         // throw proper error per spec
         error = new Error('NavigatorUserMediaError');
         error.name = 'NOT_SUPPORTED_ERROR';
@@ -60,3 +63,5 @@ module.exports = function (constraints, cb) {
         cb(error);
     });
 };
+
+module.exports.isSupported = isSupported;
