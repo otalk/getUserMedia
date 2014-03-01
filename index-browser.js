@@ -1,8 +1,8 @@
 // getUserMedia helper by @HenrikJoreteg
-var func = (navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia);
+var func = (window.navigator.getUserMedia ||
+            window.navigator.webkitGetUserMedia ||
+            window.navigator.mozGetUserMedia ||
+            window.navigator.msGetUserMedia);
 
 
 module.exports = function (constraints, cb) {
@@ -27,7 +27,7 @@ module.exports = function (constraints, cb) {
         return cb(error);
     }
 
-    func.call(navigator, constraints, function (stream) {
+    func.call(window.navigator, constraints, function (stream) {
         cb(null, stream);
     }, function (err) {
         var error;

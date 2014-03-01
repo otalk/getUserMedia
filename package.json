@@ -1,20 +1,22 @@
 {
   "name": "getusermedia",
-  "version": "0.2.1",
   "description": "cross-browser getUserMedia shim with node.js style error-first API.",
-  "main": "getusermedia.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HenrikJoreteg/getUserMedia"
+  "version": "0.2.1",
+  "author": "Henrik Joreteg <henrik@andyet.net>",
+  "browser": "index-browser.js",
+  "devDependencies": {
+    "browserify": "2.x",
+    "precommit-hook": "0.3.x"
   },
   "keywords": [
     "browser",
     "getUserMedia",
     "WebRTC"
   ],
-  "author": "Henrik Joreteg <henrik@andyet.net>",
   "license": "MIT",
-  "devDependencies": {
-    "browserify": "2.x"
+  "main": "index-node.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HenrikJoreteg/getUserMedia"
   }
 }
