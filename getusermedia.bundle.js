@@ -1,4 +1,4 @@
-!function(e){"object"==typeof exports?module.exports=e():"function"==typeof define&&define.amd?define(e):"undefined"!=typeof window?window.getUserMedia=e():"undefined"!=typeof global?global.getUserMedia=e():"undefined"!=typeof self&&(self.getUserMedia=e())}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.getUserMedia=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 // getUserMedia helper by @HenrikJoreteg
 var func = (window.navigator.getUserMedia ||
             window.navigator.webkitGetUserMedia ||
@@ -11,8 +11,8 @@ module.exports = function (constraints, cb) {
     var haveOpts = arguments.length === 2;
     var defaultOpts = {video: true, audio: true};
     var error;
-    var denied = 'PERMISSION_DENIED';
-    var notSatified = 'CONSTRAINT_NOT_SATISFIED';
+    var denied = 'PermissionDeniedError';
+    var notSatified = 'ConstraintNotSatisfiedError';
 
     // make constraints optional
     if (!haveOpts) {
@@ -23,8 +23,8 @@ module.exports = function (constraints, cb) {
     // treat lack of browser support like an error
     if (!func) {
         // throw proper error per spec
-        error = new Error('NavigatorUserMediaError');
-        error.name = 'NOT_SUPPORTED_ERROR';
+        error = new Error('MediaStreamError');
+        error.name = 'NotSupportedError';
         return cb(error);
     }
 
@@ -36,7 +36,7 @@ module.exports = function (constraints, cb) {
         // there are only two valid names according to the spec
         // we coerce all non-denied to "constraint not satisfied".
         if (typeof err === 'string') {
-            error = new Error('NavigatorUserMediaError');
+            error = new Error('MediaStreamError');
             if (err === denied) {
                 error.name = denied;
             } else {
@@ -65,4 +65,3 @@ module.exports = function (constraints, cb) {
 },{}]},{},[1])
 (1)
 });
-;

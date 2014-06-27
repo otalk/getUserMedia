@@ -8,7 +8,7 @@ module.exports = function (constraints, cb) {
         cb = constraints;
     }
 
-    var error = new Error('NavigatorUserMediaError');
-    error.name = 'NOT_SUPPORTED_ERROR';
+    var error = new Error('MediaStreamError');
+    error.name = 'NotSupportedError';
     return cb(error);
 };
