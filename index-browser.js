@@ -27,6 +27,10 @@ module.exports = function (constraints, cb) {
         return cb(error);
     }
 
+    if (localStorage && localStorage.useFirefoxFakeDevice === "true") {
+        constraints.fake = true;
+    }
+
     func.call(window.navigator, constraints, function (stream) {
         cb(null, stream);
     }, function (err) {

@@ -84,30 +84,11 @@ getUserMedia(
 
 ## Handling errors (summary)
 
-All failed calls to `getusermedia` in this library will return an error object (of type `NavigatorUserMediaError`) as the first argument to the callback. All will have a `.name` attribute of one of the following strings.
+All failed calls to `getusermedia` in this library will return an error object (of type `NavigatorUserMediaError`) as the first argument to the callback. All will have a `.name` according to [the specification](http://w3c.github.io/mediacapture-main/getusermedia.html#mediastreamerror)
 
-- `"NOT_SUPPORTED"` (for cases where a browser doesn't support `getUserMedia`.)
-- `"PERMISSION_DENIED"`
-- `"CONSTRAINT_NOT_SATISFIED"`
+## Testing
 
-
-## More about errors
-
-As of this writing all browsers handle errors differently. Firefox calls the error callback with a string, Chrome with an error object. 
-
-Neither follow [the spec](http://dev.w3.org/2011/webrtc/editor/getusermedia.html#navigatorusermediaerror-and-navigatorusermediaerrorcallback) which says it should be an error object with an appropriate `.name` attribute.
-
-According to the spec all errors should be an error object of type `NavigatorUserMediaError`. With a `.name` attribute of either: 
-
-- `"PERMISSION_DENIED"`
-- `"CONSTRAINT_NOT_SATISFIED"`
-
-Also, it sucks to have to test for capability before calling getUserMedia. This lib solves that too. So you still get an appropriate error object back with a `.name` of `"NOT_SUPPORTED_ERROR"` which is the same as what the spec says to do if a constraint is requested but not supported. For example requesting video/audio when you only have a microphone in a browser that still supports `getUserMedia`. 
-
-In this library we add one more:
-
-- `"NOT_SUPPORTED"` for cases where a browser doesn't support `getUserMedia`.
-
+For Firefox testing, the module evaluates the localStorage 'useFirefoxFakeDevice' variable to access fake devices.
 
 ## License
 
