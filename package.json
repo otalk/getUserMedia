@@ -1,7 +1,7 @@
 {
   "name": "getusermedia",
   "description": "cross-browser getUserMedia shim with node.js style error-first API.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Henrik Joreteg <henrik@andyet.net>",
   "browser": "index-browser.js",
   "devDependencies": {
