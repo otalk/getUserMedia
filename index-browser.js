@@ -6,12 +6,11 @@ var func = (window.navigator.getUserMedia ||
 
 
 module.exports = function (constraints, cb) {
-    var options;
+    var options, error;
     var haveOpts = arguments.length === 2;
     var defaultOpts = {video: true, audio: true};
-    var error;
     var denied = 'PermissionDeniedError';
-    var notSatified = 'ConstraintNotSatisfiedError';
+    var notSatisfied = 'ConstraintNotSatisfiedError';
 
     // make constraints optional
     if (!haveOpts) {
@@ -43,7 +42,7 @@ module.exports = function (constraints, cb) {
             if (err === denied) {
                 error.name = denied;
             } else {
-                error.name = notSatified;
+                error.name = notSatisfied;
             }
         } else {
             // if we get an error object make sure '.name' property is set
@@ -56,7 +55,7 @@ module.exports = function (constraints, cb) {
                 if (error[denied]) {
                     err.name = denied;
                 } else {
-                    err.name = notSatified;
+                    err.name = notSatisfied;
                 }
             }
         }
