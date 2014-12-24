@@ -30,6 +30,19 @@ module.exports = function (constraints, cb) {
         }, 0);
     }
 
+    // make requesting media from non-http sources trigger an error
+    // current browsers silently drop the request instead
+    var protocol = window.location.protocol;
+    if (protocol !== 'http:' && protocol !== 'https:') {
+        error = new Error('MediaStreamError');
+        error.name = 'NotSupportedError';
+
+        // keep all callbacks async
+        return window.setTimeout(function () {
+            cb(error);
+        }, 0);
+    }
+
     // normalize error handling when no media types are requested
     if (!constraints.audio && !constraints.video) {
         error = new Error('MediaStreamError');
