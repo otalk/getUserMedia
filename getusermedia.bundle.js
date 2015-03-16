@@ -34,7 +34,7 @@ module.exports = function (constraints, cb) {
     // make requesting media from non-http sources trigger an error
     // current browsers silently drop the request instead
     var protocol = window.location.protocol;
-    if (protocol !== 'http:' && protocol !== 'https:') {
+    if (protocol !== 'http:' && protocol !== 'https:' && protocol !== 'app:') {
         error = new Error('MediaStreamError');
         error.name = 'NotSupportedError';
 
