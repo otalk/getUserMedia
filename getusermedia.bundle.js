@@ -10,7 +10,9 @@ module.exports = function (constraints, cb) {
     var options, error;
     var haveOpts = arguments.length === 2;
     var defaultOpts = {video: true, audio: true};
+
     var denied = 'PermissionDeniedError';
+    var altDenied = 'PERMISSION_DENIED';
     var notSatisfied = 'ConstraintNotSatisfiedError';
 
     // make constraints optional
@@ -22,19 +24,6 @@ module.exports = function (constraints, cb) {
     // treat lack of browser support like an error
     if (!func) {
         // throw proper error per spec
-        error = new Error('MediaStreamError');
-        error.name = 'NotSupportedError';
-
-        // keep all callbacks async
-        return window.setTimeout(function () {
-            cb(error);
-        }, 0);
-    }
-
-    // make requesting media from non-http sources trigger an error
-    // current browsers silently drop the request instead
-    var protocol = window.location.protocol;
-    if (protocol !== 'http:' && protocol !== 'https:') {
         error = new Error('MediaStreamError');
         error.name = 'NotSupportedError';
 
@@ -68,7 +57,7 @@ module.exports = function (constraints, cb) {
         // we coerce all non-denied to "constraint not satisfied".
         if (typeof err === 'string') {
             error = new Error('MediaStreamError');
-            if (err === denied) {
+            if (err === denied || err === altDenied) {
                 error.name = denied;
             } else {
                 error.name = notSatisfied;
