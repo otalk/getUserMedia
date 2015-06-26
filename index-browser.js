@@ -1,9 +1,5 @@
 // getUserMedia helper by @HenrikJoreteg
-var func = (window.navigator.getUserMedia ||
-            window.navigator.webkitGetUserMedia ||
-            window.navigator.mozGetUserMedia ||
-            window.navigator.msGetUserMedia);
-
+var adapter = require('webrtc-adapter-test');
 
 module.exports = function (constraints, cb) {
     var options, error;
@@ -21,7 +17,7 @@ module.exports = function (constraints, cb) {
     }
 
     // treat lack of browser support like an error
-    if (!func) {
+    if (!navigator.getUserMedia) {
         // throw proper error per spec
         error = new Error('MediaStreamError');
         error.name = 'NotSupportedError';
@@ -47,7 +43,7 @@ module.exports = function (constraints, cb) {
         constraints.fake = true;
     }
 
-    func.call(window.navigator, constraints, function (stream) {
+    navigator.getUserMedia(constraints, function (stream) {
         cb(null, stream);
     }, function (err) {
         var error;
