@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "webrtc-adapter-test": "0.x"
+    "webrtc-adapter-test": "^0.1.4"
   },
   "main": "index-node.js",
   "repository": {
