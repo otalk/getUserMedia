@@ -1,8 +1,5 @@
 !function(e){"object"==typeof exports?module.exports=e():"function"==typeof define&&define.amd?define(e):"undefined"!=typeof window?window.getUserMedia=e():"undefined"!=typeof global?global.getUserMedia=e():"undefined"!=typeof self&&(self.getUserMedia=e())}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // getUserMedia helper by @HenrikJoreteg
-if (!(window.webkitRTCPeerConnection || window.mozRTCPeerConnection)) {
-    window.RTCPeerConnection = null;
-}
 var adapter = require('webrtc-adapter-test');
 
 module.exports = function (constraints, cb) {
@@ -267,8 +264,41 @@ if (navigator.mozGetUserMedia) {
 
   // The RTCPeerConnection object.
   window.RTCPeerConnection = function(pcConfig, pcConstraints) {
-    return new webkitRTCPeerConnection(pcConfig, pcConstraints);
+    var pc = new webkitRTCPeerConnection(pcConfig, pcConstraints);
+    var origGetStats = pc.getStats.bind(pc);
+    pc.getStats = function(selector, successCallback, errorCallback) { // jshint ignore: line
+      // If selector is a function then we are in the old style stats so just
+      // pass back the original getStats format to avoid breaking old users.
+      if (typeof selector === 'function') {
+        return origGetStats(selector, successCallback);
+      }
+
+      var fixChromeStats = function(response) {
+        var standardReport = {};
+        var reports = response.result();
+        reports.forEach(function(report) {
+          var standardStats = {
+            id: report.id,
+            timestamp: report.timestamp,
+            type: report.type
+          };
+          report.names().forEach(function(name) {
+            standardStats[name] = report.stat(name);
+          });
+          standardReport[standardStats.id] = standardStats;
+        });
+
+        return standardReport;
+      };
+      var successCallbackWrapper = function(response) {
+        successCallback(fixChromeStats(response));
+      };
+      return origGetStats(successCallbackWrapper, selector);
+    };
+
+    return pc;
   };
+
   // add promise support
   ['createOffer', 'createAnswer'].forEach(function(method) {
     var nativeMethod = webkitRTCPeerConnection.prototype[method];
@@ -435,7 +465,7 @@ function requestUserMedia(constraints) {
 
 if (typeof module !== 'undefined') {
   module.exports = {
-    RTCPeerConnection: RTCPeerConnection,
+    RTCPeerConnection: window.RTCPeerConnection,
     getUserMedia: getUserMedia,
     attachMediaStream: attachMediaStream,
     reattachMediaStream: reattachMediaStream,
@@ -445,6 +475,21 @@ if (typeof module !== 'undefined') {
     //requestUserMedia: not exposed on purpose.
     //trace: not exposed on purpose.
   };
+} else if ((typeof require === 'function') && (typeof define === 'function')) {
+  // Expose objects and functions when RequireJS is doing the loading.
+  define([], function() {
+    return {
+      RTCPeerConnection: window.RTCPeerConnection,
+      getUserMedia: getUserMedia,
+      attachMediaStream: attachMediaStream,
+      reattachMediaStream: reattachMediaStream,
+      webrtcDetectedBrowser: webrtcDetectedBrowser,
+      webrtcDetectedVersion: webrtcDetectedVersion,
+      webrtcMinimumVersion: webrtcMinimumVersion
+      //requestUserMedia: not exposed on purpose.
+      //trace: not exposed on purpose.
+    };
+  });
 }
 
 },{}]},{},[1])
