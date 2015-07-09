@@ -39,6 +39,7 @@ module.exports = function (constraints, cb) {
         }, 0);
     }
 
+    // testing support
     if (localStorage && localStorage.useFirefoxFakeDevice === "true") {
         constraints.fake = true;
     }
