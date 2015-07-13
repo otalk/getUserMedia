@@ -17,6 +17,16 @@
   "dependencies": {
     "webrtc-adapter-test": "^0.1.4"
   },
+  "testling": {
+    "files": "test/test.js"
+  },
+  "devDependencies": {
+    "browserify": "^10.2.1",
+    "precommit-hook": "1.x",
+    "tape": "^4.0.0",
+    "travis-multirunner": "^2.5.0",
+    "testling": "^1.7.1"
+  },
   "main": "index-node.js",
   "repository": {
     "type": "git",
