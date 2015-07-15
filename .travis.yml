@@ -28,4 +28,9 @@ after_failure:
   - for file in *.log; do echo $file; echo "======================"; cat $file; done || true
 
 script:
+  - jshint .
   - npm run test-travis
+
+notifications:
+  email:
+  - build@andyet.com
