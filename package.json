@@ -20,6 +20,9 @@
   "testling": {
     "files": "test/test.js"
   },
+  "scripts": {
+    "test-travis": "test/run-tests"
+  },
   "devDependencies": {
     "browserify": "^10.2.1",
     "precommit-hook": "1.x",
