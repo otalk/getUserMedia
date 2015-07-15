@@ -28,4 +28,4 @@ after_failure:
   - for file in *.log; do echo $file; echo "======================"; cat $file; done || true
 
 script:
-  - npm test-travis
+  - npm run test-travis
