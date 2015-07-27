@@ -34,7 +34,7 @@ test('getUserMedia video-only', function (t) {
   });
 });
 
-test('getUserMedia video-only', function (t) {
+test('getUserMedia audio-video', function (t) {
   var constraints = {audio: true, video: true};
   if (adapter.webrtcDetectedBrowser === 'firefox') constraints.fake = true;
   getUserMedia(constraints, function (err, stream) {
