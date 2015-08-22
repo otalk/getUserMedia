@@ -5,11 +5,12 @@
   "author": "Henrik Joreteg <henrik@andyet.net>",
   "browser": "index-browser.js",
   "devDependencies": {
-    "browserify": "^10.2.1",
+    "browserify": "^11.0.1",
     "precommit-hook": "1.x",
     "tape": "^4.0.0",
     "travis-multirunner": "^2.5.0",
-    "testling": "^1.7.1"
+    "testling": "^1.7.1",
+    "webrtc-adapter-test": "^0.2.3"
   },
   "keywords": [
     "browser",
@@ -17,9 +18,6 @@
     "WebRTC"
   ],
   "license": "MIT",
-  "dependencies": {
-    "webrtc-adapter-test": "^0.2.3"
-  },
   "testling": {
     "files": "test/test.js"
   },
