@@ -17,13 +17,13 @@ module.exports = function (constraints, cb) {
     }
 
     // treat lack of browser support like an error
-    if (!navigator.getUserMedia) {
+    if (typeof navigator === 'undefined' || !navigator.getUserMedia) {
         // throw proper error per spec
         error = new Error('MediaStreamError');
         error.name = 'NotSupportedError';
 
         // keep all callbacks async
-        return window.setTimeout(function () {
+        return setTimeout(function () {
             cb(error);
         }, 0);
     }
@@ -34,7 +34,7 @@ module.exports = function (constraints, cb) {
         error.name = 'NoMediaRequestedError';
 
         // keep all callbacks async
-        return window.setTimeout(function () {
+        return setTimeout(function () {
             cb(error);
         }, 0);
     }
