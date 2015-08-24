@@ -39,7 +39,8 @@ module.exports = function (constraints, cb) {
         }, 0);
     }
 
-    // testing support
+    // testing support -- note: using the about:config pref is better
+    // for Firefox 39+, this might get removed in the future
     if (localStorage && localStorage.useFirefoxFakeDevice === 'true') {
         constraints.fake = true;
     }
