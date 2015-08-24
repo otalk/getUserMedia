@@ -1,8 +1,8 @@
-// getUserMedia helper by @HenrikJoreteg
+// getUserMedia helper by @HenrikJoreteg used for navigator.getUserMedia shim
 var adapter = require('webrtc-adapter-test');
 
 module.exports = function (constraints, cb) {
-    var options, error;
+    var error;
     var haveOpts = arguments.length === 2;
     var defaultOpts = {video: true, audio: true};
 
@@ -40,7 +40,7 @@ module.exports = function (constraints, cb) {
     }
 
     // testing support
-    if (localStorage && localStorage.useFirefoxFakeDevice === "true") {
+    if (localStorage && localStorage.useFirefoxFakeDevice === 'true') {
         constraints.fake = true;
     }
 
