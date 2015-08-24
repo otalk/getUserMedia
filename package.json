@@ -5,7 +5,7 @@
   "author": "Henrik Joreteg <henrik@andyet.net>",
   "browser": "index-browser.js",
   "devDependencies": {
-    "browserify": "^10.2.1",
+    "browserify": "^11.0.1",
     "precommit-hook": "1.x",
     "tape": "^4.0.0",
     "travis-multirunner": "^2.5.0",
