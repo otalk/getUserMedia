@@ -1,8 +1,8 @@
-// getUserMedia helper by @HenrikJoreteg
+// getUserMedia helper by @HenrikJoreteg used for navigator.getUserMedia shim
 var adapter = require('webrtc-adapter-test');
 
 module.exports = function (constraints, cb) {
-    var options, error;
+    var error;
     var haveOpts = arguments.length === 2;
     var defaultOpts = {video: true, audio: true};
 
@@ -17,13 +17,13 @@ module.exports = function (constraints, cb) {
     }
 
     // treat lack of browser support like an error
-    if (!navigator.getUserMedia) {
+    if (typeof navigator === 'undefined' || !navigator.getUserMedia) {
         // throw proper error per spec
         error = new Error('MediaStreamError');
         error.name = 'NotSupportedError';
 
         // keep all callbacks async
-        return window.setTimeout(function () {
+        return setTimeout(function () {
             cb(error);
         }, 0);
     }
@@ -34,13 +34,13 @@ module.exports = function (constraints, cb) {
         error.name = 'NoMediaRequestedError';
 
         // keep all callbacks async
-        return window.setTimeout(function () {
+        return setTimeout(function () {
             cb(error);
         }, 0);
     }
 
     // testing support
-    if (localStorage && localStorage.useFirefoxFakeDevice === "true") {
+    if (localStorage && localStorage.useFirefoxFakeDevice === 'true') {
         constraints.fake = true;
     }
 
