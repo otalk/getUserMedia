@@ -8,7 +8,7 @@
     "browserify": "^11.0.1",
     "precommit-hook": "1.x",
     "tape": "^4.0.0",
-    "travis-multirunner": "^2.5.0",
+    "travis-multirunner": "^3.0.0",
     "testling": "^1.7.1"
   },
   "keywords": [
