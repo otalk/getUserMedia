@@ -1,5 +1,5 @@
 // getUserMedia helper by @HenrikJoreteg used for navigator.getUserMedia shim
-var adapter = require('webrtc-adapter-test');
+var adapter = require('webrtc-adapter');
 
 module.exports = function (constraints, cb) {
     var error;
