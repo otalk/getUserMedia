@@ -6,11 +6,10 @@
 var test = require('tape');
 
 var getUserMedia = require('../index-browser.js');
-var adapter = require('webrtc-adapter-test');
+var adapter = require('webrtc-adapter');
 
 test('getUserMedia audio-only', function (t) {
-  var constraints = {audio: true};
-  if (adapter.webrtcDetectedBrowser === 'firefox') constraints.fake = true;
+  var constraints = {audio: true, fake: true};
   getUserMedia(constraints, function (err, stream) {
     if (err) {
         t.fail(err.toString());
@@ -22,8 +21,7 @@ test('getUserMedia audio-only', function (t) {
 });
 
 test('getUserMedia video-only', function (t) {
-  var constraints = {video: true};
-  if (adapter.webrtcDetectedBrowser === 'firefox') constraints.fake = true;
+  var constraints = {video: true, fake: true};
   getUserMedia(constraints, function (err, stream) {
     if (err) {
         t.fail(err.toString());
@@ -35,8 +33,7 @@ test('getUserMedia video-only', function (t) {
 });
 
 test('getUserMedia audio-video', function (t) {
-  var constraints = {audio: true, video: true};
-  if (adapter.webrtcDetectedBrowser === 'firefox') constraints.fake = true;
+  var constraints = {audio: true, video: true, fake: true};
   getUserMedia(constraints, function (err, stream) {
     if (err) {
         t.fail(err.toString());
