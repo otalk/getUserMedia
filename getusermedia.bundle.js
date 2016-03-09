@@ -46,9 +46,10 @@ module.exports = function (constraints, cb) {
         constraints.fake = true;
     }
 
-    navigator.getUserMedia(constraints, function (stream) {
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(function (stream) {
         cb(null, stream);
-    }, function (err) {
+    }).catch(function (err) {
         var error;
         // coerce into an error object since FF gives us a string
         // there are only two valid names according to the spec
@@ -122,11 +123,11 @@ module.exports = function (constraints, cb) {
   // Shim browser if found.
   switch (browserDetails.browser) {
     case 'chrome':
-      if (!chromeShim) {
+      if (!chromeShim||!chromeShim.shimPeerConnection) {
         logging('Chrome shim is not included in this adapter release.');
         return;
       }
-      logging('Adapter.js shimming chrome!');
+      logging('adapter.js shimming chrome!');
       // Export to the adapter global object visible in the browser.
       module.exports.browserShim = chromeShim;
 
@@ -136,22 +137,22 @@ module.exports = function (constraints, cb) {
       chromeShim.shimOnTrack();
       break;
     case 'edge':
-      if (!edgeShim) {
+      if (!edgeShim||!edgeShim.shimPeerConnection) {
         logging('MS edge shim is not included in this adapter release.');
         return;
       }
-      logging('Adapter.js shimming edge!');
+      logging('adapter.js shimming edge!');
       // Export to the adapter global object visible in the browser.
       module.exports.browserShim = edgeShim;
 
       edgeShim.shimPeerConnection();
       break;
     case 'firefox':
-    if (!firefoxShim) {
+      if (!firefoxShim||!firefoxShim.shimPeerConnection) {
         logging('Firefox shim is not included in this adapter release.');
         return;
       }
-      logging('Adapter.js shimming firefox!');
+      logging('adapter.js shimming firefox!');
       // Export to the adapter global object visible in the browser.
       module.exports.browserShim = firefoxShim;
 
@@ -1466,18 +1467,18 @@ var edgeShim = {
         states[transceiver.dtlsTransport.state]++;
       });
       // ICETransport.completed and connected are the same for this purpose.
-      states.connected += states.completed;
+      states['connected'] += states['completed'];
 
       newState = 'new';
-      if (states.failed > 0) {
+      if (states['failed'] > 0) {
         newState = 'failed';
-      } else if (states.connecting > 0 || states.checking > 0) {
+      } else if (states['connecting'] > 0 || states['checking'] > 0) {
         newState = 'connecting';
-      } else if (states.disconnected > 0) {
+      } else if (states['disconnected'] > 0) {
         newState = 'disconnected';
-      } else if (states.new > 0) {
+      } else if (states['new'] > 0) {
         newState = 'new';
-      } else if (states.connecting > 0 || states.completed > 0) {
+      } else if (states['connecting'] > 0 || states['completed'] > 0) {
         newState = 'connected';
       }
 
@@ -2011,7 +2012,7 @@ var utils = {
     // Returned result object.
     var result = {};
     result.browser = null;
-    result.version = null
+    result.version = null;
     result.minVersion = null;
 
     // Non supported browser.
@@ -2047,6 +2048,10 @@ var utils = {
       result.minVersion = 10547;
       return result;
     }
+    
+    // Non supported browser default.
+    result.browser = 'Not a supported browser.';
+    return result;
   }
 };
 
