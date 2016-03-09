@@ -45,9 +45,10 @@ module.exports = function (constraints, cb) {
         constraints.fake = true;
     }
 
-    navigator.getUserMedia(constraints, function (stream) {
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(function (stream) {
         cb(null, stream);
-    }, function (err) {
+    }).catch(function (err) {
         var error;
         // coerce into an error object since FF gives us a string
         // there are only two valid names according to the spec
