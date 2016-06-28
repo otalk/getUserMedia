@@ -5,8 +5,7 @@
 /* global Promise */
 var test = require('tape');
 
-var getUserMedia = require('../index-browser.js');
-var adapter = require('webrtc-adapter');
+var getUserMedia = require('../getusermedia');
 
 test('getUserMedia audio-only', function (t) {
   var constraints = {audio: true, fake: true};
