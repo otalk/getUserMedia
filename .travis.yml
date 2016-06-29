@@ -3,7 +3,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - 0.12
+  - 6
 
 cache:
     directories:
@@ -35,7 +35,7 @@ after_failure:
   - for file in *.log; do echo $file; echo "======================"; cat $file; done || true
 
 script:
-  - jshint .
+  - npm run lint
   - npm run test-travis
 
 notifications:

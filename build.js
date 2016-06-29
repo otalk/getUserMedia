@@ -2,5 +2,5 @@ var bundle = require('browserify')({ standalone: 'getUserMedia' }),
     fs = require('fs');
 
 
-bundle.add('./index-browser');
+bundle.add('./getusermedia');
 bundle.bundle().pipe(fs.createWriteStream('getusermedia.bundle.js'));
