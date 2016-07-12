@@ -41,9 +41,12 @@ module.exports = function (constraints, cb) {
 
     // testing support -- note: using the about:config pref is better
     // for Firefox 39+, this might get removed in the future
-    if (localStorage && localStorage.useFirefoxFakeDevice === 'true') {
+    // This will throw an exception in an iframe.
+    try {
+      if (localStorage && localStorage.useFirefoxFakeDevice === 'true') {
         constraints.fake = true;
-    }
+      }
+    } catch(e) {/* ignore */}
 
     navigator.mediaDevices.getUserMedia(constraints)
     .then(function (stream) {
