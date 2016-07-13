@@ -86,10 +86,6 @@ getUserMedia(
 
 All failed calls to `getusermedia` in this library will return an error object (of type `NavigatorUserMediaError`) as the first argument to the callback. All will have a `.name` according to [the specification](http://w3c.github.io/mediacapture-main/getusermedia.html#mediastreamerror)
 
-## Testing
-
-For Firefox testing, the module evaluates the localStorage 'useFirefoxFakeDevice' variable to access fake devices.
-
 ## License
 
 MIT
