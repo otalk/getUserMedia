@@ -1,7 +1,7 @@
 {
   "name": "getusermedia",
   "description": "cross-browser getUserMedia shim with node.js style error-first API.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Henrik Joreteg <henrik@andyet.net>",
   "devDependencies": {
     "browserify": "^13.0.1",
@@ -17,7 +17,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "webrtc-adapter": "^1.0.1"
+    "webrtc-adapter": "^2.0.2"
   },
   "testling": {
     "files": "test/test.js"
