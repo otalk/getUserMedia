@@ -50,6 +50,24 @@ Passing in options is optional. It defaults to `{video: true, audio: true}`;
 getUserMedia({video: true, audio: false}, function (err, stream) { ... });
 ```
 
+To attach video to DOM element use [attachMediaStream](https://github.com/HenrikJoreteg/attachMediaStream).
+
+
+## Using with requireJS
+
+Use file getusermedia.require.js
+
+```js
+define(['getusermedia'], function(getUserMedia) {
+    getUserMedia({video: true, audio: false}, function (err, stream) {
+        if (err)
+           console.log('failed');
+        else
+           console.log('got a stream', stream);  
+    });
+});
+```
+
 
 ## Why? Because it's super ugly without this tool
 
